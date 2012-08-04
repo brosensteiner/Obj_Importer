@@ -1,0 +1,12 @@
+################################################################################
+#
+# Resource file of custom package Obj_Importer
+#
+################################################################################
+
+
+dataFile -name    "Wavefront OBJ" \
+         -option  "obj" \
+         -ext     "obj" \
+         -load    "obj_importer" \
+         -package "Obj_Importer"

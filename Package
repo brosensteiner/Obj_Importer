@@ -1,0 +1,10 @@
+set PACKAGE {Obj_Importer}
+
+set LIBS {
+    hxplot hxtime hxsurface hxcolor hxfield
+    hxcore amiramesh mclib oiv tcl hxitk itk
+}
+
+set SHARE {
+    share/resources/Obj_Importer.rc
+}
