@@ -30,7 +30,7 @@ OBJ_IMPORTER_API
 int obj_importer(const char* filename)
 {
     
-    unsigned int i;
+    unsigned int i;//for counter in for loops
 
     if (filename) {
         
