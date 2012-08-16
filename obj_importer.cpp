@@ -31,12 +31,15 @@ int obj_importer(const char* filename)
 {
     
     unsigned int i;//for counter in for loops
+    unsigned int aSize;//saves size of triangeles or points
 
     if (filename) {
         
-        theMsg->printf("try to load obj file mhh...");
+        theMsg->printf("this loader is no standard Amira loader (author: Bernhard Rosensteiner, brosensteiner@gmail.com)");
         
-        cObj myObject(filename);//this object handles the complete reading procedure of an .obj file
+        cObj myObject(filename);//this object handles the complete reading procedure of an .obj file -> see class definition
+        
+        theMsg->printf("%s has %d points and %d faces", filename, myObject.vertices.size(), myObject.faces.size());
         
         //allocate new HxSurface object
         HxSurface *aSurface = new HxSurface;
@@ -51,7 +54,7 @@ int obj_importer(const char* filename)
         aSurface->points.resize(myObject.vertices.size());
         aSurface->triangles.resize(myObject.faces.size());
         
-        for (i=0; i < myObject.vertices.size(); i++) { // read vertices in aSurface
+        for (i=0, aSize = myObject.vertices.size(); i < aSize; i++) { // read vertices in aSurface
             
             McVec3f& aPoint = aSurface->points[i];
             aPoint[0] = myObject.vertices[i].v[0];
@@ -59,7 +62,7 @@ int obj_importer(const char* filename)
             aPoint[2] = myObject.vertices[i].v[2];
         }
         
-        for (i=0; i < myObject.faces.size(); i++) { // read vertices in aSurface
+        for (i=0, aSize = myObject.faces.size(); i < aSize; i++) { // read faces in aSurface
             
             Surface::Triangle& aTriangle = aSurface->triangles[i];
             aTriangle.points[0] = myObject.faces[i].vertex[0];
@@ -69,21 +72,25 @@ int obj_importer(const char* filename)
         }
         
         aPatch->triangles.resize(myObject.faces.size());
-        for (i=0; i < myObject.faces.size(); i++) {
+        for (i=0, aSize = myObject.faces.size(); i < aSize; i++) {
             aPatch->triangles[i] = i; // add all triangles to one patch
         }
+        
+        aSurface->recompute();//recompute surface information, when not done Amira crashes to 90% when one wants to connect a SurfaceView module
         
         
         if (aSurface)
             HxData::registerData(aSurface, filename);
         else
-            theMsg->printf("could not register Surface from .obj file!");
+            theMsg->printf("could not register surface from .obj file!");
         
         // Fix the load command of all created objects
-        McString loadCmd;
-        loadCmd.printf("set TMPIO [load -obj_importer %s]\n"
+        /*
+         McString loadCmd;
+        loadCmd.printf("set TMPIO [load -obj %s]\n"
                        "lindex $TMPIO 0", filename);
         aSurface->setLoadCmd(loadCmd,1);
+        */
     }
     
 
