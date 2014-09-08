@@ -35,7 +35,7 @@ int obj_importer(const char* filename)
 
     if (filename) {
         
-        theMsg->printf("this loader is no standard Amira loader (author: Bernhard Rosensteiner, brosensteiner@gmail.com)");
+        theMsg->printf(" Wavefront .obj file loader (author: Bernhard Rosensteiner, brosensteiner@gmail.com)");
         
         cObj myObject(filename);//this object handles the complete reading procedure of an .obj file -> see class definition
         
@@ -78,11 +78,14 @@ int obj_importer(const char* filename)
         
         aSurface->recompute();//recompute surface information, when not done Amira crashes to 90% when one wants to connect a SurfaceView module
         
-        
-        if (aSurface)
+        if (aSurface) {
             HxData::registerData(aSurface, filename);
+            aSurface->createAllEdges(1);//fill edges arrays
+            aSurface->updateInfo();
+            aSurface->compute();
+        }
         else
-            theMsg->printf("could not register surface from .obj file!");
+            theMsg->printf("could not register surface from %s file!", filename);
         
         // Fix the load command of all created objects
         /*

@@ -68,7 +68,7 @@
 		762204B015C7FD59001F8A98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Bernhard Rosensteiner";
 			};
 			buildConfigurationList = 762204B315C7FD59001F8A98 /* Build configuration list for PBXProject "Obj_Importer" */;
